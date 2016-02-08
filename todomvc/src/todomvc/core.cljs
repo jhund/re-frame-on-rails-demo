@@ -15,8 +15,8 @@
 
 ;; -- Routes and History ------------------------------------------------------
 
-(defroute "/" [] (dispatch [:set-showing :all]))
-(defroute "/:filter" [filter] (dispatch [:set-showing (keyword filter)]))
+(defroute "/todos" [] (dispatch [:set-showing :all]))
+(defroute "/todos/:filter" [filter] (dispatch [:set-showing (keyword filter)]))
 
 (def history
   (doto (History.)

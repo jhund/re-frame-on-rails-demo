@@ -41,28 +41,5 @@
 
 (def default-value            ;; what gets put into app-db by default.
   {:todos   (sorted-map)      ;; an empty list of todos. Use the (int) :id as the key
-   :showing :all})            ;; show all todos
-
-
-
-;; -- Local Storage  ----------------------------------------------------------
-;;
-;; Part of the todomvc challenge is to store todos in LocalStorage, and
-;; on app startup, reload the todos from when the program was last run.
-;; But we are not to load the setting for the "showing" filter. Just the todos.
-;;
-
-(def lsk "todos-reframe")     ;; localstore key
-
-(defn ls->todos
-  "Read in todos from LS, and process into a map we can merge into app-db."
-  []
-  (some->> (.getItem js/localStorage lsk)
-           (cljs.reader/read-string)   ;; stored as an EDN map.
-           (into (sorted-map))         ;; map -> sorted-map
-           (hash-map :todos)))         ;; access via the :todos key
-
-(defn todos->ls!
-  "Puts todos into localStorage"
-  [todos]
-  (.setItem js/localStorage lsk (str todos)))   ;; sorted-map writen as an EDN map
+   :showing :all              ;; show all todos
+   :loading false})

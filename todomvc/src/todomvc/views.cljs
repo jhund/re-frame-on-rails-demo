@@ -2,6 +2,7 @@
   (:require [reagent.core  :as reagent :refer [atom]]
             [re-frame.core :refer [subscribe dispatch]]))
 
+;; add loading indicator
 
 (defn todo-input [{:keys [title on-save on-stop]}]
   (let [val (atom title)
