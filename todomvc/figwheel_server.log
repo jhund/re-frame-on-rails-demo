@@ -1,0 +1,8 @@
+[0mCompiling "resources/public/js/client.js" from ("src" "devsrc")...
+notifying browser that file changed:  resources/public/js/goog/deps.js
+notifying browser that file changed:  resources/public/js/cljs_deps.js
+notifying browser that file changed:  out/todomvc/core.js
+[32mSuccessfully compiled "resources/public/js/client.js" in 0.912 seconds.[0m
+[0mCompiling "resources/public/js/client.js" from ("src" "devsrc")...
+notifying browser that file changed:  out/todomvc/core.js
+[32mSuccessfully compiled "resources/public/js/client.js" in 0.538 seconds.[0m
