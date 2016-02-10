@@ -1,6 +1,7 @@
 (defproject todomvc-re-frame "0.7.0-alpha"
   :dependencies [[org.clojure/clojure       "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
+                 [binaryage/devtools "0.5.2"]
                  [cljs-ajax "0.5.3"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0-alpha"]

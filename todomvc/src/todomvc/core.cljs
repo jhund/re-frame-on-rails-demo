@@ -1,6 +1,7 @@
 (ns todomvc.core
   (:require-macros [secretary.core :refer [defroute]])
-  (:require [goog.events :as events]
+  (:require [devtools.core :as devtools]
+            [goog.events :as events]
             [reagent.core :as reagent :refer [atom]]
             [re-frame.core :refer [dispatch dispatch-sync]]
             [secretary.core :as secretary]
@@ -10,8 +11,8 @@
   (:import [goog History]
            [goog.history EventType]))
 
-
-(enable-console-print!)
+(devtools/install!)
+;; (.log js/console "hola") ;; how to print to console
 
 ;; -- Routes and History ------------------------------------------------------
 
