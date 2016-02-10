@@ -1,9 +1,8 @@
 (ns todomvc.handlers
   (:require [ajax.core :refer [GET POST PUT DELETE]]
-            [clojure.string :refer [join]]
-            [todomvc.db    :as db]
-            [re-frame.core :refer [register-handler path trim-v after dispatch]]
-            [schema.core   :as s]))
+            [todomvc.db :as db]
+            [re-frame.core :refer [register-handler path trim-v after dispatch debug]]
+            [schema.core :as s]))
 
 ;; -- Middleware --------------------------------------------------------------
 ;;
@@ -46,7 +45,7 @@
   check-schema-mw                 ;; afterwards: check that app-db matches the schema
   (fn [_ _]                       ;; the handler being registered
     (dispatch [:get-todos])       ;; trigger loading of todos from REST backend
-    (db/default-value)))          ;; all hail the new state
+    db/default-value))          ;; all hail the new state
 
 
                                   ;; usage:  (dispatch [:set-showing  :active])
@@ -129,10 +128,23 @@
   (fn
     [db _]
     (GET
-      (str json-api-base-url "/todos")
+      (str json-api-base-url "/todos.json")
       { :handler #(dispatch [:get-todos-success %1])
-        :error-handler #(dispatch [:get-todos-error %1])})
+        :error-handler #(dispatch [:get-todos-error %1])
+        :format :json
+        :response-format :json
+        :keywords? true})
     (assoc db :loading? true)))
+
+
+(register-handler
+  :get-todos-success
+  (fn
+    [db [_ response]]
+    (.log js/console (clj->js response))
+    (-> db
+        (assoc :loading? false)
+        (assoc :todos response))))
 
 
 ;; Loads details for todo with id. Calls Rails #show action.
@@ -181,12 +193,3 @@
       { :handler   #(dispatch [:destroy-todo-success %1])
         :error-handler #(dispatch [:destroy-todo-error %1])})
     (assoc db :loading? true)))
-
-
-(register-handler
-  :get-todos-success
-  (fn
-    [db [_ response]]
-    (-> db
-        (assoc :loading? false)
-        (assoc :todos response))))

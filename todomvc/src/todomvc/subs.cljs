@@ -25,29 +25,31 @@
 (register-sub
   :todos                ;; usage:  (subscribe [:todos])
   (fn [db _]
-      (reaction (vals (:todos @db)))))
+    (reaction (vals (:todos @db)))))
 
 (register-sub
   :visible-todos
   (fn [db _]
-      (reaction (let [filter-fn (filter-fn-for (:showing @db))
-                      todos     (vals (:todos @db))]
-                     (filter filter-fn todos)))))
+    (reaction
+      (let [filter-fn (filter-fn-for (:showing @db))
+            todos     (vals (:todos @db))]
+        (filter filter-fn todos)))))
 
 (register-sub
   :completed-count
   (fn [db _]
-      (reaction (completed-count (:todos @db)))))
+    (reaction (completed-count (:todos @db)))))
 
 (register-sub
   :footer-stats
   (fn [db _]
-      (reaction
-        (let [todos (:todos @db)
-              completed-count (completed-count todos)
-              active-count    (- (count todos) completed-count)
-              showing         (:showing @db)]
-             [active-count completed-count showing]))))  ;; tuple
+    (reaction
+      (let [todos (:todos @db)
+            completed-count (completed-count todos)
+            active-count    (- (count todos) completed-count)
+            showing         (:showing @db)]
+        [active-count completed-count showing]))))  ;; tuple
+
 (register-sub
   :loading?
   (fn [db _]
