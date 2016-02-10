@@ -73,24 +73,28 @@
   []
   (let [todos           (subscribe [:todos])
         visible-todos   (subscribe [:visible-todos])
-        completed-count (subscribe [:completed-count])]
+        completed-count (subscribe [:completed-count])
+        loading?        (subscribe [:loading?])]
     (fn []
       [:div
-       [:section.todoapp
-        [:header#header
-         [:h1 "todos"]
-         [todo-input {:class "new-todo"
-                      :placeholder "What needs to be done?"
-                      :on-save #(dispatch [:add-todo %])}]]
-        (when-not (empty? @todos)
-          [:div
-           [:section.main
-            [:input.toggle-all
-             {:type "checkbox"
-              :checked (pos? @completed-count)
-              :on-change #(dispatch [:complete-all-toggle])}]
-            [:label {:for "toggle-all"} "Mark all as complete"]
-            [todo-list visible-todos]]
-           [stats-footer]])]
-       [:footer.info
-        [:p "Double-click to edit a todo"]]])))
+        [:section.todoapp
+          [:header#header
+            [:h1 "todos"]
+            [todo-input {:class "new-todo"
+                         :placeholder "What needs to be done?"
+                         :on-save #(dispatch [:add-todo %])}]]
+          (when-not (empty? @todos)
+            [:div
+              [:section.main
+                [:input.toggle-all
+                  {:type "checkbox"
+                   :checked (pos? @completed-count)
+                   :on-change #(dispatch [:complete-all-toggle])}]
+                [:label {:for "toggle-all"} "Mark all as complete"]
+                [todo-list visible-todos]]
+              [stats-footer]])]
+        [:footer.info
+          [:p "Double-click to edit a todo"]
+          [:p (if @loading? "Loading" "Idle")]
+          [:button {:on-click #(dispatch [:get-todos])} "Load"]]])))
+

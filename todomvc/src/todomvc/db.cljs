@@ -28,7 +28,8 @@
                           :all             ;; all todos are shown
                           :active          ;; only todos whose :done is false
                           :done            ;; only todos whose :done is true
-                          )})
+                          )
+              :loading? s/Bool})
 
 
 
@@ -42,4 +43,4 @@
 (def default-value            ;; what gets put into app-db by default.
   {:todos   (sorted-map)      ;; an empty list of todos. Use the (int) :id as the key
    :showing :all              ;; show all todos
-   :loading false})
+   :loading? false})

@@ -48,3 +48,8 @@
               active-count    (- (count todos) completed-count)
               showing         (:showing @db)]
              [active-count completed-count showing]))))  ;; tuple
+(register-sub
+  :loading?
+  (fn [db _]
+    (reaction (:loading? @db))))
+
